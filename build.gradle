@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'idea'
+}
+
+repositories {
+    jcenter()
+    flatDir { dirs 'lib' }
+}
+
+mainClassName = 'bank.BankLauncher'
+
+sourceCompatibility = 11
+targetCompatibility = 11
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+def currentOS = org.gradle.internal.os.OperatingSystem.current()
+def platform
+if (currentOS.isWindows()) {
+    platform = 'win'
+} else if (currentOS.isLinux()) {
+    platform = 'linux'
+} else if (currentOS.isMacOsX()) {
+    platform = 'mac'
+}
+
+dependencies {
+    implementation "org.openjfx:javafx-base:11:${platform}"
+    implementation "org.openjfx:javafx-graphics:11:${platform}"
+    implementation "org.openjfx:javafx-controls:11:${platform}"
+    implementation "org.openjfx:javafx-swing:11:${platform}"
+}
+
+dependencies {
+    implementation 'junit:junit:4.12'
+    compile ':bank-core:'
+}
+
+idea.module.outputDir file("out/production/classes")
+
+
